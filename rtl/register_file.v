@@ -22,7 +22,7 @@ module register_file
   begin
     if (!rstn)
     begin
-      for (i = 0; i < NB_OF_REGS; i++)
+      for (i = 0; i < NB_OF_REGS; i = i + 1)
         mem[i] <= 0;
       
       mem[9] <= 'd10;

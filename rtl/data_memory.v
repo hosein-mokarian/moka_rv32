@@ -18,7 +18,7 @@ module data_memory
   begin
     if (!rstn)
     begin
-      for (i = 0; i < MEM_CAPACITY; i++)
+      for (i = 0; i < MEM_CAPACITY; i = i + 1)
         mem[i] <= 0;
     end
     else if (rstn && en)
