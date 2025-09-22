@@ -3,7 +3,7 @@ package moka_transaction_pkg;
 import uvm_pkg::*;
 `include "uvm_macros.svh"
 
-class moka_rv32i_pipelined_transaction extends uvm_transaction;
+class moka_rv32i_pipelined_transaction extends uvm_sequence_item;
     rand bit rstn;
     rand bit en;
 
