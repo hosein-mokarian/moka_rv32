@@ -16,14 +16,17 @@ module moka_top
   (
     input rstn,
     input en,
-    input clk
+    input clk,
+    input [DATA_WIDTH - 1 : 0] instr_mem_address,
+    input [DATA_WIDTH - 1 : 0] instr_mem_write_data,
+    input instr_mem_we
   );
 
 
   parameter NB_OF_REGS = 32;
   parameter ADDRESS_BIT_WIDTH = 5;
-  parameter INSTR_MEM_CAPACITY = 10;
-  parameter DATA_MEM_CAPACITY = 10;
+  parameter INSTR_MEM_CAPACITY = 1024;
+  parameter DATA_MEM_CAPACITY = 10 * 1024;
 
 
   //--- FETCH ---
@@ -31,6 +34,7 @@ module moka_top
   wire [DATA_WIDTH - 1 : 0] PCF;
   wire [DATA_WIDTH - 1 : 0] PCPlus4F;
   wire [DATA_WIDTH - 1 : 0] InstrF;
+  wire [DATA_WIDTH - 1 : 0] instr_mem_addr;
 
   //--- DECODE ---
   wire [DATA_WIDTH - 1 : 0] InstrD;
@@ -158,6 +162,19 @@ module moka_top
   );
 
 
+  mux2
+  #(.DATA_WIDTH(DATA_WIDTH))
+  INSTR_MEM_MUX
+  (
+    .rstn(rstn),
+    .en(1),
+    .sel(instr_mem_we),
+    .a(PCF),
+    .b(instr_mem_address),
+    .y(instr_mem_addr)
+  );
+
+
   instruction_memory
   #(.DATA_WIDTH(DATA_WIDTH),
     .MEM_CAPACITY(INSTR_MEM_CAPACITY)
@@ -166,7 +183,10 @@ module moka_top
   (
     .rstn(rstn),
     .en(en),
-    .A(PCF),
+    .clk(clk),
+    .A(instr_mem_addr),
+    .WD(instr_mem_write_data),
+    .WE(instr_mem_we),
     .RD(InstrF)
   );
 
