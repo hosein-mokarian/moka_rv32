@@ -7,7 +7,7 @@ import moka_transaction_pkg::*;
 class moka_rv32i_pipelined_scoreboard extends uvm_scoreboard;
     uvm_analysis_imp #(moka_rv32i_pipelined_transaction, moka_rv32i_pipelined_scoreboard) ap_imp;
 
-    `uvm_object_utils(moka_rv32i_pipelined_scoreboard)
+    `uvm_component_utils(moka_rv32i_pipelined_scoreboard)
 
     function new(string name = "moka_rv32i_pipelined_scoreboard", uvm_component parent = null);
         super.new(name, parent);

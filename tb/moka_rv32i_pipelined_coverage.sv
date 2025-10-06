@@ -24,7 +24,7 @@ class moka_rv32i_pipelined_coverage extends uvm_subscriber#(moka_rv32i_pipelined
     function void write(moka_rv32i_pipelined_transaction t);
         cov_trans = t;
         moka_rv32i_pipelined_cg.sample();
-        `uvm_info("COV", $sformatf("Sampled %s: data=0x%0h", t.en ? "one" : "zero", t.rstn), UVM_LOW)
+        // `uvm_info("COV", $sformatf("Sampled %s: address=0x%0h, data=0x%0h", t.instr_mem_address, t.data), UVM_LOW)
     endfunction
 
 endclass
