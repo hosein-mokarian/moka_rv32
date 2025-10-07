@@ -3,11 +3,11 @@ package moka_transaction_pkg;
 import uvm_pkg::*;
 `include "uvm_macros.svh"
 
-class moka_rv32i_pipelined_transaction extends uvm_sequence_item;
+class moka_rv32i_pipelined_transaction#(DATA_WIDTH = 32) extends uvm_sequence_item;
     logic rstn;
     logic en;
-    logic instr_mem_address;
-    logic instr_mem_write_data;
+    logic [DATA_WIDTH - 1 : 0] instr_mem_address;
+    logic [DATA_WIDTH - 1 : 0] instr_mem_write_data;
     logic instr_mem_we;
 
     `uvm_object_utils_begin(moka_rv32i_pipelined_transaction)

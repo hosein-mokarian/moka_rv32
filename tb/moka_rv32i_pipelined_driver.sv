@@ -37,16 +37,18 @@ class moka_rv32i_pipelined_driver extends uvm_driver#(moka_rv32i_pipelined_trans
 
             seq_item_port.get_next_item(req);
 
-            `uvm_info("DRIVER", $sformatf("Received seq: rstn=0x%01h , en=0x%01h", vif.rstn, vif.en), UVM_MEDIUM)
-            `uvm_info("DRIVER", $sformatf("Received seq: addr=0x%08h, data=0x%08h, we=0x%01h", vif.instr_mem_address, vif.instr_mem_write_data, vif.instr_mem_we), UVM_MEDIUM)
-            
+            `uvm_info("DRIVER", $sformatf("Received seq: rstn=%01b , en=%01b", req.rstn, req.en), UVM_MEDIUM)
+            `uvm_info("DRIVER", $sformatf("Received seq: addr=0x%08h, data=0x%08h, we=%01b", req.instr_mem_address, req.instr_mem_write_data, req.instr_mem_we), UVM_MEDIUM)
+
+            `uvm_info("DRIVER", "waiting for the negedge clk ...", UVM_LOW)
+            @(negedge vif.clk);
+            `uvm_info("DRIVER", "Negedge clk is occurred.", UVM_LOW)
+
             vif.rstn = req.rstn;
             vif.en = req.en;
             vif.instr_mem_address = req.instr_mem_address;
             vif.instr_mem_write_data = req.instr_mem_write_data;
             vif.instr_mem_we = req.instr_mem_we;
-
-            @(negedge vif.clk);
 
             seq_item_port.item_done();
         end

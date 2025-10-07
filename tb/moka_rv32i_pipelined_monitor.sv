@@ -50,10 +50,10 @@ class moka_rv32i_pipelined_monitor extends uvm_monitor;
         forever begin
             @(posedge vif.clk);
 
-            `uvm_info("MONITOR", $sformatf("Received vif: rstn=0x%01h , en=0x%01h", vif.rstn, vif.en), UVM_MEDIUM)
-            `uvm_info("MONITOR", $sformatf("Received vif: addr=0x%08h, data=0x%08h, we=0x%01h", vif.instr_mem_address, vif.instr_mem_write_data, vif.instr_mem_we), UVM_MEDIUM)
+            `uvm_info("MONITOR", $sformatf("Received vif: rstn=%01b , en=%01b", vif.rstn, vif.en), UVM_MEDIUM)
+            `uvm_info("MONITOR", $sformatf("Received vif: addr=0x%08h, data=0x%08h, we=%01b", vif.instr_mem_address, vif.instr_mem_write_data, vif.instr_mem_we), UVM_MEDIUM)
 
-            tx = moka_rv32i_pipelined_transaction::type_id::create("tx");
+            tx = moka_rv32i_pipelined_transaction#(.DATA_WIDTH(32))::type_id::create("tx");
 
             tx.rstn = vif.rstn;
             tx.en = vif.en;

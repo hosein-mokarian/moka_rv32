@@ -224,16 +224,6 @@ module moka_tb;
   end
 
   initial begin
-    vif.rstn = 0;
-    vif.en = 0;
-    vif.instr_mem_address = 32'b0;
-    vif.instr_mem_write_data = 32'b1;
-    vif.instr_mem_we = 1;
-    // #5 vif.rstn = 1;
-    // #5 vif.en = 1;
-  end
-
-  initial begin
     #1000;  // Keep simulation alive for 1000ns
     $finish; // Then explicitly finish
   end
