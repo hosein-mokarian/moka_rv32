@@ -15,6 +15,9 @@ module instruction_memory
   reg [DATA_WIDTH - 1 : 0] mem [MEM_CAPACITY - 1 : 0];
 
   integer i;
+  wire [DATA_WIDTH - 1 : 0] addr;
+
+  assign addr = A >> 2;
 
   always @(posedge clk or negedge rstn)
   begin
@@ -27,10 +30,10 @@ module instruction_memory
     end
     else if (WE)
     begin
-      mem[A] <= WD;
+      mem[addr] <= WD;
     end
   end
 
-  assign RD = (rstn && en && !WE) ? mem[A] : {DATA_WIDTH{1'b0}};
+  assign RD = (rstn && en && !WE) ? mem[addr] : {DATA_WIDTH{1'b0}};
 
 endmodule
